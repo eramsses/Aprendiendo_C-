@@ -1,4 +1,6 @@
 using CursoIdentityFramework.Data;
+using CursoIdentityFramework.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //Inyección de la dependencia DbContext (DataContext) para conexión de la Base de datos
-builder.Services.AddDbContext<DataContext>(options =>
+builder.Services.AddDbContext<DataContext>(opciones =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PcConnectionSa"));
+    opciones.UseSqlServer(builder.Configuration.GetConnectionString("PcConnectionSa"));
 });
+
+//Agregar el servicio Identity y sus configuración
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>();
+
 
 var app = builder.Build();
 
@@ -26,6 +32,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//Se agrega la autenticación
+app.UseAuthentication();
 
 app.UseAuthorization();
 

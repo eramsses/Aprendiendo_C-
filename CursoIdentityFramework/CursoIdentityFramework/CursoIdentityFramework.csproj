@@ -16,4 +16,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Entities\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>
