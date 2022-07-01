@@ -1,7 +1,16 @@
+using CursoIdentityFramework.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Inyección de la dependencia DbContext (DataContext) para conexión de la Base de datos
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PcConnectionSa"));
+});
 
 var app = builder.Build();
 
